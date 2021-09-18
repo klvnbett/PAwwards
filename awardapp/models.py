@@ -12,6 +12,9 @@ class Projects(models.Model):
     description=models.TextField
     author=models.ForeignKey(User,on_delete=models.CASCADE)
 
+    def __str__(self):
+        return self.title
+
 class Profile(models.Model):
     '''
     this is a class to generate the user's profile
