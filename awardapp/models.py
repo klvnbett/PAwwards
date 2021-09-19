@@ -49,3 +49,18 @@ class Projects(models.Model):
     def search_project(cls,search_term):
         searched_project = cls.objects.filter(title = search_term)
         return searched_project
+
+class Ratings(models.Model):
+    design = models.IntegerField(default=1)
+    usability = models.IntegerField(default=1)
+    content = models.IntegerField(default=1)
+    user = models.ForeignKey(User,on_delete=models.CASCADE)
+    project_id = models.ForeignKey(Projects,on_delete=models.CASCADE)
+
+class Comments(models.Model):
+    project_id = models.ForeignKey(Projects,on_delete=models.CASCADE)
+    text = models.CharField(max_length=1000)
+    user = models.ForeignKey(User,on_delete = models.CASCADE)
+
+    def __str__(self):
+        return self.user
