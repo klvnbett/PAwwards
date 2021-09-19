@@ -12,4 +12,11 @@ def profile(request):
     
     all_projects = Projects.objects.filter(user = request.user)
     return render(request,'awards/profile.html',{'all_projects':all_projects})
-    
+
+def new_project(request):
+      if request.method=='POST':
+        form = NewProjectForm(request.POST,request.FILES)
+        if form.is_valid():
+            project = form.save(commit=False)
+            project.user = request.user
+            project.save()
