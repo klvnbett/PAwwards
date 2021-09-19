@@ -14,6 +14,8 @@ urlpatterns =[
     url('comment/<int:id>/',views.comment,name='comment'),
     url(r'^editprofile/$',views.edit_profile,name='editprofile'),
     url(r'^singleproject/(\d+)',views.single_project,name='singleproject'),
+    url('rate/<int:id>/',views.rate,name='rates'),
+    url(r'^logout/$',views.logout_request,name='logout'),
 
 ]
 if settings.DEBUG:
