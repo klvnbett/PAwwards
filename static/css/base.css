@@ -1,0 +1,24 @@
+body {
+    color: aquamarine;
+}
+
+.roww {
+    margin: 5px;
+}
+
+.card {
+    border: white;
+    background-color: transparent;
+}
+
+.carousel-caption {
+    font-family: 'Courgette', cursive;
+}
+
+.supreme {
+    padding-top: 30px;
+    padding-bottom: 30px;
+    background-color: cornflowerblue;
+    width: 20%;
+    margin-left: 40%;
+}
