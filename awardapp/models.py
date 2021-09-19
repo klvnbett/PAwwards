@@ -19,4 +19,8 @@ class Profile(models.Model):
     '''
     this is a class to generate the user's profile
     '''
+    profile=models.ImageField(upload_to='profile')
+    bio= models.TextField(blank=True)
+    user_id=models.OneToOneField(User,null=True,on_delete=models.CASCADE)
+    add_info=models.TextField(blank=False,null=True)
     
