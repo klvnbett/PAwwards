@@ -39,3 +39,25 @@ def search_results(request):
     else:
         message = 'Kindly Enter a search Value'
         return render(request,'awards/search.html',{'message':message})
+
+def comment(request,id):
+    id = id
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit = False)
+            comment.user = request.user
+            project = Projects.objects.get(id = id)
+            comment.project_id = project
+            comment.save()
+            return redirect('index')
+
+        else:
+            project_id = id
+            messages.info(request,'Ensure all required fields are filled')
+            return redirect('comment',id = project_id)
+
+    else:
+        id = id
+        form = CommentForm()
+        return render(request,'awards/comment.html',{'form':form,'id':id})
