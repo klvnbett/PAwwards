@@ -5,8 +5,9 @@ from django.contrib.auth.models import User
 
 # Create your views here.
 def index(request):
+    date=dt.date.today
     all_projects = Projects.all_projects()
-    return render(request,'awards/index.html',{'all_projects':all_projects})
+    return render(request,'awards/index.html',{'date':date, 'all_projects':all_projects})
     
 def profile(request):
     
@@ -102,3 +103,40 @@ def single_project(request,id):
         content = 0       
 
         return render(request,'awards/single_project.html',{'project':project,'comments':comments,'design':design,'usability':usability,'content':usability})
+
+
+def rate(request,id):
+    if request.method =='POST':
+        rates = Ratings.objects.filter(id = id)
+        for rate in rates:
+            if rate.user == request.user:
+                messages.info(request,'Rating is only done once')
+                return redirect('singleproject',id)
+        design = request.POST.get('design')
+        usability = request.POST.get('usability')
+        content = request.POST.get('content')
+
+        if design and usability and content:
+            project = Projects.objects.get(id = id)
+            rate = Ratings(design = design,usability = usability,content = content,project_id = project,user = request.user)
+            rate.save()
+            return redirect('singleproject',id)
+
+        else:
+            messages.info(request,'Input all fields')
+            return redirect('singleproject',id)
+
+
+    else:
+        messages.info(request,'Input all fields')
+        return redirect('singleproject',id)
+        
+
+@login_required(login_url="/accounts/login/")
+def logout_request(request):
+  '''
+  Function for logging out user
+  '''
+
+  logout(request)
+  return redirect('index')
