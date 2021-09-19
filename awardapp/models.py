@@ -1,6 +1,7 @@
 from django.db import models
 import datetime as dt
 from django.contrib.auth.models import User
+from django.dispatch import receiver
 # Create your models here.
 
 
@@ -8,12 +9,16 @@ class Projects(models.Model):
     '''
     this is the class to generate the user's projects
     '''
-    title=models.CharField(max_length=125)
-    description=models.TextField
-    author=models.ForeignKey(User,on_delete=models.CASCADE)
-
-    def __str__(self):
-        return self.title
+    project_name = models.CharField(max_length=300)
+    image = CloudinaryField('images')
+    description = models.TextField()
+    pub_date = models.DateTimeField(auto_now_add=True)
+    author = models.ForeignKey(User,on_delete=models.CASCADE, blank=True)
+    author_photo = models.ForeignKey(Profile,on_delete=models.CASCADE,blank=True, default='1')
+    url = models.URLField()
+    
+    def save_project(self):
+         self.save()
 
 class Profile(models.Model):
     '''
