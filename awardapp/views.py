@@ -23,9 +23,9 @@ def new_project(request):
 
             return redirect('index')
 
-    else:
-        form = NewProjectForm()
-    return render(request,'awards/new_project.html',{'form':form})
+        else:
+            form = NewProjectForm()
+        return render(request,'awards/new_project.html',{'form':form})
 
 def search_results(request):
 
@@ -61,3 +61,44 @@ def comment(request,id):
         id = id
         form = CommentForm()
         return render(request,'awards/comment.html',{'form':form,'id':id})
+
+def edit_profile(request):
+    user = request.user
+    if request.method == 'POST':
+        form = EditProfileForm(request.POST,request.FILES)
+        if form.is_valid():
+            profile = form.save(commit=False)
+            profile.user = request.user
+            profile.save()
+            return redirect('profile')
+
+    else:
+        form = EditProfileForm(request.POST,request.FILES)
+    return render(request,'awards/update_profile.html',{'form':form})
+
+def single_project(request,id):  
+
+    project = Projects.objects.get(id = id)
+    comments = Comments.objects.filter(project_id = id)
+    rates = Ratings.objects.filter(project_id = id)
+    designrate = []
+    usabilityrate = []
+    contentrate = []
+    if rates:
+        for rate in rates:
+            designrate.append(rate.design)
+            usabilityrate.append(rate.usability)
+            contentrate.append(rate.content)
+
+        total = len(designrate)*10
+        design = round(sum(designrate)/total*100,1)
+        usability = round(sum(usabilityrate)/total*100,1)
+        content = round(sum(contentrate)/total*100,1)
+        return render(request,'awards/single_project.html',{'project':project,'comments':comments,'design':design,'usability':usability,'content':usability})
+
+    else:
+        design = 0
+        usability = 0
+        content = 0       
+
+        return render(request,'awards/single_project.html',{'project':project,'comments':comments,'design':design,'usability':usability,'content':usability})
