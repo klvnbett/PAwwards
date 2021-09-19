@@ -33,7 +33,7 @@ class Projects(models.Model):
     @classmethod
     def all_projects(cls):
     
-    all_projects = cls.objects.all()
+        all_projects = cls.objects.all()
         return all_projects
 
     @classmethod
