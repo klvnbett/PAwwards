@@ -1,0 +1,31 @@
+{% extends 'registration/base.html'%} {% load bootstrap3 %} {% block content %}
+<div class="container">
+    <div class="col-md-3"></div>
+    <div class="col-md-6">
+        {% if form.errors %}
+        <p>Ensure that information is entered correctly</p>
+        {% endif %}
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3>Sign up</h3>
+            </div>
+            <div class="panel-body">
+                <form action="/accounts/register/" method="post">
+                    {% csrf_token %} {% bootstrap_form form layout='inline' %}
+                    <div class="form-group" style="margin-left:40%;">
+                        <input type="submit" class="btn-lg btn-outline-info" value="Sign Up">
+                    </div>
+
+                    <input type="hidden" name="next" value="{{next}}">
+
+                </form>
+                <p>Already have an account?
+                    <a class="btn btn-primary" href="/accounts/login/">  sign In </a> here
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3"></div>
+</div>
+
+{% endblock %}
