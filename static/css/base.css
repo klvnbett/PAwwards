@@ -22,3 +22,35 @@ body {
     width: 20%;
     margin-left: 40%;
 }
+
+.caption {
+    font-family: 'Courgette', cursive;
+}
+
+body {
+    background-color: aquamarine;
+}
+
+#login {
+    margin-top: 5%;
+    border: gold;
+}
+
+.caption {
+    font-family: 'Courgette', cursive;
+    background-color: transparent !important;
+    /* margin-left: 20%; */
+    text-align: center;
+}
+
+.navbar {
+    position: fixed !important;
+    color: black;
+    z-index: 3;
+}
+
+nav {
+    background-color: rgba(64, 93, 151, 0.8);
+    width: 100%;
+    font-size: 30px;
+}

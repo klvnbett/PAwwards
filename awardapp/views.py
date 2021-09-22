@@ -5,17 +5,20 @@ from django.contrib.auth.models import User
 
 # Create your views here.
 def index(request):
-    date=dt.date.today
+
     all_projects = Projects.all_projects()
-    return render(request,'awards/index.html',{'date':date, 'all_projects':all_projects})
-    
+    return render(request,'awards/index.html',{'all_projects':all_projects})
+
+@login_required(login_url = '/accounts/login/')
 def profile(request):
-    
+
     all_projects = Projects.objects.filter(user = request.user)
     return render(request,'awards/profile.html',{'all_projects':all_projects})
 
+
+@login_required(login_url = '/accounts/login/')
 def new_project(request):
-      if request.method=='POST':
+    if request.method=='POST':
         form = NewProjectForm(request.POST,request.FILES)
         if form.is_valid():
             project = form.save(commit=False)
@@ -24,10 +27,12 @@ def new_project(request):
 
             return redirect('index')
 
-        else:
-            form = NewProjectForm()
-        return render(request,'awards/new_project.html',{'form':form})
+    else:
+        form = NewProjectForm()
+    return render(request,'awards/new_project.html',{'form':form})
 
+
+@login_required(login_url = '/accounts/login/')
 def search_results(request):
 
     if 'project' in request.GET and request.GET['project']:
@@ -41,6 +46,8 @@ def search_results(request):
         message = 'Kindly Enter a search Value'
         return render(request,'awards/search.html',{'message':message})
 
+
+@login_required(login_url = '/accounts/login/')
 def comment(request,id):
     id = id
     if request.method == 'POST':
@@ -63,6 +70,8 @@ def comment(request,id):
         form = CommentForm()
         return render(request,'awards/comment.html',{'form':form,'id':id})
 
+
+@login_required(login_url = '/accounts/login/')
 def edit_profile(request):
     user = request.user
     if request.method == 'POST':
@@ -77,6 +86,8 @@ def edit_profile(request):
         form = EditProfileForm(request.POST,request.FILES)
     return render(request,'awards/update_profile.html',{'form':form})
 
+
+@login_required(login_url = '/accounts/login/')
 def single_project(request,id):  
 
     project = Projects.objects.get(id = id)
@@ -105,6 +116,7 @@ def single_project(request,id):
         return render(request,'awards/single_project.html',{'project':project,'comments':comments,'design':design,'usability':usability,'content':usability})
 
 
+@login_required(login_url = '/accounts/login/')
 def rate(request,id):
     if request.method =='POST':
         rates = Ratings.objects.filter(id = id)
@@ -130,13 +142,4 @@ def rate(request,id):
     else:
         messages.info(request,'Input all fields')
         return redirect('singleproject',id)
-        
 
-@login_required(login_url="/accounts/login/")
-def logout_request(request):
-  '''
-  Function for logging out user
-  '''
-
-  logout(request)
-  return redirect('index')

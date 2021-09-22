@@ -8,14 +8,14 @@ class ProfileTEst(TestCase):
         '''
         Set up class to create a new profile
         '''
-        self.joker = User(username = 'joker',email = 'joker@gmail.com')
-        self.joker = Profile(user = Self.joker,user_id = 1,bio = 'Web design',pic = 'pic.jpg',info = 'Contact me')
+        self.koroo = User(username = 'kororo',email = 'kororo@gmail.com')
+        self.kororo = Profile(user = Self.kororo,user_id = 1,bio = 'Web design',pic = 'pic.jpg',info = 'Contact me')
 
     def test_instance(self):
         '''
         Test class to test instantiation
         '''
-        self.assertTrue(isinstance(self.joker,Profile))
+        self.assertTrue(isinstance(self.kororo,Profile))
 
     def test_save_profile(self):
         '''
@@ -29,14 +29,14 @@ class ProfileTEst(TestCase):
         '''
         Test to see if a profile can be deleted 
         '''
-        self.joker.delete_profile()
+        self.kororo.delete_profile()
         all_profiles = Profile.objects.all()
         self.assertEqual(len(all_profiles),0)
 
 class ProjectsTestCase(TestCase):
     def setUp(self):
      
-        self.new_post = Projects(image = 'pic.jpg',title = 'picture',description = 'Nice picture',user = joker,link = 'https://trial.com')
+        self.new_post = Projects(image = 'pic.jpg',title = 'picture',description = 'Nice picture',user = kororo,link = 'https://trial.com')
 
 
     def test_save_image(self):
@@ -64,7 +64,7 @@ class ProjectsTestCase(TestCase):
 
 class CommentTestCase(TestCase):
     def setUp(self):
-        self.comment=Comment(text="So Nice",pic=self.bmw.id,user = self.joker')    
+        self.comment=Comment(text="So Nice",pic=self.bmw.id,user = self.kororo')    
 
         
 
