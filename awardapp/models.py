@@ -6,7 +6,7 @@ from django.dispatch import receiver
 
 
 class Profile(models.Model):
-    user=models.OneToOneField(User,on_delete=models.CASCADE)
+    user = models.OneToOneField(User,on_delete = models.CASCADE)
     pic = models.ImageField(upload_to = 'images/')
     bio = models.TextField(max_length=1000)
     info = models.TextField(max_length=5000)
@@ -41,15 +41,17 @@ class Projects(models.Model):
     def one_project(cls,id):
         one_project = cls.objects.filter(id=id)
         return one_project
+
     @classmethod
     def user_projects(cls,user):
         user_projects = cls.objects.filter(user = user)
         return user_projects
-    
+
     @classmethod
     def search_project(cls,search_term):
         searched_project = cls.objects.filter(title = search_term)
         return searched_project
+
 
 class Ratings(models.Model):
     design = models.IntegerField(default=1)
@@ -57,6 +59,7 @@ class Ratings(models.Model):
     content = models.IntegerField(default=1)
     user = models.ForeignKey(User,on_delete=models.CASCADE)
     project_id = models.ForeignKey(Projects,on_delete=models.CASCADE)
+    
 
 class Comments(models.Model):
     project_id = models.ForeignKey(Projects,on_delete=models.CASCADE)
@@ -71,7 +74,6 @@ class Comments(models.Model):
     def get_all_comments(cls,id):
         comments = cls.objects.filter(project_id = id)
         return comments
-
 
     def save_comments(self):
         self.save()
