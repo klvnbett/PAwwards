@@ -2,18 +2,41 @@ from django.shortcuts import render,redirect
 from django.contrib.auth.decorators import login_required
 from .models import *
 from django.contrib.auth.models import User
+from .forms import *
+from rest_framework.views import APIView
+from . serializer import *
+from rest_framework.response import Response
+
 
 # Create your views here.
 def index(request):
-
-    all_projects = Projects.all_projects()
-    return render(request,'awards/index.html',{'all_projects':all_projects})
+    if request.method=='POST':
+        form=ProjectForm(request.POST)
+        form=ProfileForm(request.POST)
+        if form.is_valid():
+            project=form.save(commit=False)
+            project.user=request.user
+            project.save()
+    else:
+        form=ProjectForm()
+        form=ProfileForm()
+    
+    try:
+        profiles=Profile.objects.all()
+        projects=Projects.objects.all()
+    
+    except:
+        Projects.DoesNotExist,
+        profiles.DoesNotExist,
+        
+    # all_projects = Projects.all_projects()
+    return render(request,'awards/index.html',{"profiles":profiles,"projects":projects,"form":form})
 
 @login_required(login_url = '/accounts/login/')
 def profile(request):
 
     all_projects = Projects.objects.filter(user = request.user)
-    return render(request,'awards/profile.html',{'all_projects':all_projects})
+    return render(request,'awards/profile.html',{'all_projects':all_projects })
 
 
 @login_required(login_url = '/accounts/login/')
@@ -143,3 +166,14 @@ def rate(request,id):
         messages.info(request,'Input all fields')
         return redirect('singleproject',id)
 
+class ProjectApi(APIView):
+    def get(self, request, format=None):
+        all_projects = Projects.objects.all()
+        serializers = ProjSerializer(all_projects, many=True)
+        return Response(serializers.data)
+
+class ProfileApi(APIView):
+    def get(self, request, format=None):
+        all_projects = Profile.objects.all()
+        serializers = ProfSerializer(all_projects, many=True)
+        return Response(serializers.data)

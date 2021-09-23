@@ -20,3 +20,13 @@ class EditProfileForm(forms.ModelForm):
     class Meta:
         model = Profile
         exclude = ['user']
+
+class ProfileForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = ['pic','bio','info']
+
+class ProjectForm(forms.ModelForm):
+    class Meta:
+        model = Projects
+        fields = ['title','description','link','image']

@@ -24,7 +24,7 @@
 
 
 
-    <nav class="navbar navbar-expand-sm  navbar-right">
+    <nav class="navbar navbar-expand-sm  navbar-light">
 
         <!-- Brand/logo -->
         <a href=" {% url 'index' %} ">The AWARDS</a>
@@ -36,7 +36,7 @@
         <div class="collapse navbar-collapse" id="collapse_Navbar">
             <ul class="navbar-nav">
                 <li class="nav-item active">
-                    <a class="nav-link" href=" {% url 'profile' %} ">Profile</a>
+                    <a class="nav-link" href=" {% url 'profile' %}  ">Profile</a>
                 </li>
 
                 <li class="nav-item">
@@ -81,6 +81,13 @@
             </div>
 
         </form>
+
+
+
+        <li><a href="/api/profilesview/">Profiles</a></li>
+        <li><a href="/api/projectview/">Projects</a></li>
+
+        </li>
     </nav>
     <!-- </div>  -->
 </body>

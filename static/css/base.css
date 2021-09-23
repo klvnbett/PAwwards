@@ -1,6 +1,4 @@
-body {
-    color: aquamarine;
-}
+body {}
 
 .roww {
     margin: 5px;
@@ -23,23 +21,14 @@ body {
     margin-left: 40%;
 }
 
-.caption {
-    font-family: 'Courgette', cursive;
-}
-
-body {
-    background-color: aquamarine;
-}
-
 #login {
     margin-top: 5%;
-    border: gold;
+    border: rgb(255, 0, 85);
 }
 
 .caption {
     font-family: 'Courgette', cursive;
     background-color: transparent !important;
-    /* margin-left: 20%; */
     text-align: center;
 }
 
@@ -53,4 +42,5 @@ nav {
     background-color: rgba(64, 93, 151, 0.8);
     width: 100%;
     font-size: 30px;
+    color: black;
 }
