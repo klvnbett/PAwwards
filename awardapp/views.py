@@ -1,4 +1,4 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect,get_object_or_404
 from django.contrib.auth.decorators import login_required
 from .models import *
 from django.contrib.auth.models import User
@@ -6,6 +6,9 @@ from .forms import *
 from rest_framework.views import APIView
 from . serializer import *
 from rest_framework.response import Response
+from .permissions import IsAdminOrReadOnly
+from django.contrib.auth.forms import UserCreationForm
+from rest_framework import status
 
 
 # Create your views here.
@@ -23,21 +26,21 @@ def index(request):
         form=ProfileForm()
     
     try:
-        profiles=Profile.objects.all()
+        profile=Profile.objects.all()
         projects=Projects.objects.all()
     
     except:
         Projects.DoesNotExist,
-        profiles.DoesNotExist,
+        profile.DoesNotExist,
         
-    # all_projects = Projects.all_projects()
-    return render(request,'awards/index.html',{"profiles":profiles,"projects":projects,"form":form})
+    all_projects = Projects.all_projects()
+    return render(request,'awards/index.html',{"profile":profile,"projects":projects,"form":form})
 
 @login_required(login_url = '/accounts/login/')
 def profile(request):
-
-    all_projects = Projects.objects.filter(user = request.user)
-    return render(request,'awards/profile.html',{'all_projects':all_projects })
+    profile=Profile.objects.all()
+    # all_projects = Projects.objects.filter(user = request.user)
+    return render(request,'awards/profile.html',{'profile':profile })
 
 
 @login_required(login_url = '/accounts/login/')
@@ -172,9 +175,11 @@ class ProjectApi(APIView):
         all_projects = Projects.objects.all()
         serializers = ProjSerializer(all_projects, many=True)
         return Response(serializers.data)
+    permission_classes = (IsAdminOrReadOnly,)
 
 class ProfileApi(APIView):
     def get(self, request, format=None):
         all_projects = Profile.objects.all()
         serializers = ProfSerializer(all_projects, many=True)
         return Response(serializers.data)
+    permission_classes = (IsAdminOrReadOnly,)

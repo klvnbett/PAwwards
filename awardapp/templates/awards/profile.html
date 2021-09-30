@@ -6,8 +6,8 @@
         <div class="col-md-6">
             <div class="card">
                 <h2 style="text-align:center"><u>  {{user.username}}'s Profile </u> </h2>
-                {% if user.Profile.profile_pic %}
-                <img src=" {{user.Profile.profile_pic}} " alt="Profile picture"> {% else %} alt="dp"> {% endif %}
+                {% if user.profile.pic %}
+                <img src=" {{user.profile.pic}} " alt="Profile picture"> {% else %} {% endif %}
                 <div class="card-body">
                     <h4 class="card-title">
                         <h3 style="text-align: center;">Username: {{user.username}} </h3>
