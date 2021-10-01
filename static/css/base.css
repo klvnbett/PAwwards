@@ -1,4 +1,7 @@
-body {}
+body {
+    background-color: aquamarine;
+    font-style: italic;
+}
 
 .roww {
     margin: 5px;
