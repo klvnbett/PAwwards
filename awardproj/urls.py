@@ -18,7 +18,7 @@ from django.conf.urls import url
 from django.contrib import admin
 from django.contrib.auth import views
 from django_registration.backends.one_step.views import RegistrationView
-
+from django.contrib.auth import views as auth_views
 from rest_framework.authtoken.views import obtain_auth_token
 
 urlpatterns = [
@@ -29,5 +29,6 @@ urlpatterns = [
     path('accounts/register/',RegistrationView.as_view(success_url='/accounts/login'),name='django_registration_register'),
     path('accounts/', include('django_registration.backends.one_step.urls')),
     path('accounts/', include('django.contrib.auth.urls')),
+    path('change-password/', auth_views.PasswordChangeView.as_view()),
     
 ]
